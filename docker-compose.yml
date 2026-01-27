@@ -1,0 +1,49 @@
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: sis_mysql
+    restart: always
+    environment:
+      TZ: America/Lima
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: sis_asistencia
+      MYSQL_USER: sis_user
+      MYSQL_PASSWORD: sis_pass
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./schema_only.sql:/docker-entrypoint-initdb.d/01_schema.sql:ro
+      - ./seed_admin.sql:/docker-entrypoint-initdb.d/02_seed_admin.sql:ro
+
+  web:
+    build: .
+    container_name: sis_web
+    restart: always
+    ports:
+      - "5000:5000"
+    environment:
+      TZ: America/Lima
+      MYSQLHOST: mysql
+      MYSQLUSER: sis_user
+      MYSQLPASSWORD: sis_pass
+      MYSQLDATABASE: sis_asistencia
+      MYSQLPORT: 3306
+      SERVICIOS_SHEET_ID: 1_awzgN1eqSRLkppKAU_xzeA3e8rne6QOsOjgQXIJRAE
+      SYNC_TOKEN: super_token_secreto_123
+    depends_on:
+      - mysql
+    volumes:
+      - uploads_data:/app/uploads
+
+  cron:
+    build: ./cron
+    container_name: sis_cron
+    depends_on:
+      - web
+    environment:
+      TZ: America/Lima
+      SYNC_TOKEN: super_token_secreto_123
+
+volumes:
+  mysql_data:
+  uploads_data:

@@ -1,0 +1,8 @@
+flask
+flask-cors
+mysql-connector-python
+cloudinary
+pandas
+openpyxl
+requests
+gunicorn

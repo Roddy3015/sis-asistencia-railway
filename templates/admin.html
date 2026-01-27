@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Panel Admin - Asistencias Consolidadas</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        body { font-family: Arial; background: #1a1a1a; color: white; margin:0; padding:0; }
+        .admin-container { padding: 20px; color: white; display:none; }
+
+        .tabla-scroll {
+            max-height: 80vh;
+            overflow-y: auto;
+            border: 1px solid rgba(255,255,255,0.1);
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(255,255,255,0.05);
+        }
+
+        thead th {
+            position: sticky;
+            top: 0;
+            background: #1a1a1a;
+            z-index: 10;
+            padding: 15px;
+        }
+
+        th, td {
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 12px;
+            text-align: center;
+            vertical-align: top;
+        }
+
+        /* LOGIN */
+        #login-box {
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+            justify-content:center;
+            height:100vh;
+        }
+
+        #login-box input {
+            padding:10px;
+            margin-bottom:10px;
+            width:215px;
+            border-radius:5px;
+            border:none;
+        }
+
+        #login-box button {
+            padding:10px 80px;
+            border:none;
+            border-radius:5px;
+            background:#007bff;
+            color:white;
+            cursor:pointer;
+        }
+
+        #login-box button:hover {
+            background:#0056b3;
+        }
+
+        #error-msg {
+            color:red;
+            margin-bottom:10px;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<!-- ================= LOGIN ================= -->
+<div id="login-box">
+    <h2>INICIAR SESIÓN</h2>
+    <div id="error-msg"></div>
+    <input type="text" id="usuario" placeholder="Usuario">
+    <input type="password" id="password" placeholder="Contraseña">
+    <button onclick="loginAdmin()">Ingresar</button>
+</div>
+
+<!-- ================= PANEL ADMIN ================= -->
+<div class="admin-container">
+
+    <div class ="top-actions">
+
+        <button id="btn-users" onclick="abrirModalUsuarios()">👤 Gestionar Usuarios</button>
+        <button id="btn-logout" onclick="logoutAdmin()">Cerrar Sesión</button>
+
+    </div>
+
+    <h1>PANEL ADMINISTRATIVO</h1>
+
+    <!-- BARRA SUPERIOR -->
+    <div class="filtro-oc">
+        <input type="text" id="buscarOC" placeholder="Buscar por OC">
+        <input type="date" id="fechaInicio">
+        <input type="date" id="fechaFin">
+
+        <button class="btn-oc" onclick="buscarConFiltros()">🔍 Buscar</button>
+        <button class="btn-excel" onclick="descargarZip()">📦 Descargar ZIP</button>
+    </div>
+
+    <!-- TABLA ASISTENCIAS -->
+    <div class="tabla-scroll">
+        <table>
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Jefe de Grupo</th>
+                    <th>Servicio / OC</th>
+                    <th>Sección de Entrada</th>
+                    <th>Sección de Salida</th>
+                    <th>Resumen</th>
+                    <th>Observación General</th>
+                </tr>
+            </thead>
+            <tbody id="lista-asistencias"></tbody>
+        </table>
+    </div>
+</div>
+
+<!-- ================= MODAL GESTION USUARIOS ================= -->
+<div id="modal-usuarios">
+    <div class="modal-box">
+
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+            <h2>Gestionar Usuarios</h2>
+            <button class="btn-close-users" onclick="cerrarModalUsuarios()">CERRAR</button>
+        </div>
+
+        <hr>
+
+        <!-- CREAR USUARIO -->
+        <h3>Crear usuario</h3>
+        <div class="users-create-row">
+            <input id="u-nombre" type="text" placeholder="Nombre completo">
+            <div class="password-wrapper">
+                <input id="nuevoPassword" type="password" placeholder="Contraseña">
+                <span class="toggle-pass" onclick="togglePassword()">👁️</span>
+            </div>
+            
+            <select id="u-rol">
+                <option value="JEFE">JEFE</option>
+                <option value="ADMIN">ADMIN</option>
+            </select>
+            <button class="btn-crear-usuario" onclick="crearUsuario()">Crear</button>
+        </div>
+        <div id="u-msg" style="margin-top:8px;"></div>
+
+        <hr>
+
+        <!-- LISTA USUARIOS -->
+        <h3>Usuarios existentes</h3>
+        <div class="usuarios-table-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Rol</th>
+                <th>Activo</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="tabla-usuarios"></tbody>
+          </table>
+
+        </div>
+
+    </div>
+</div>
+<!-- ================= MODAL IMAGEN (VISOR) ================= -->
+<div id="modal-imagen" class="img-modal" onclick="cerrarModalImagen(event)">
+  <div class="img-modal-box" onclick="event.stopPropagation()">
+    <button class="img-modal-close" onclick="cerrarModalImagen()">CERRAR</button>
+    <img id="img-modal-src" src="" alt="Foto" />
+  </div>
+</div>
+
+<script src="{{ url_for('static', filename='admin.js') }}"></script>
+
+</body>
+</html>
