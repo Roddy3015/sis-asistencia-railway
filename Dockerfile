@@ -9,4 +9,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 
-CMD ["sh", "-c", "gunicorn -b 0.0.0.0:${PORT:-5000} app:app --workers=2 --threads=4 --timeout=120"]
+CMD ["sh", "-c", "gunicorn -b 0.0.0.0:${PORT:-8080} app:app --workers=2 --threads=4 --timeout=120 --access-logfile - --error-logfile -"]
