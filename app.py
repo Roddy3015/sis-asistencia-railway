@@ -18,6 +18,11 @@ PERU_TZ = timezone(timedelta(hours=-5))
 app = Flask(__name__)
 CORS(app)
 
+@app.get("/health")
+def health():
+    return {"status": "ok"}, 200
+
+
 @app.route('/')
 def home():
     return render_template('index.html')
