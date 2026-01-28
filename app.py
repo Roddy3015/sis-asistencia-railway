@@ -14,6 +14,7 @@ from pathlib import Path
 import re
 
 PERU_TZ = timezone(timedelta(hours=-5))
+ahora_peru = datetime.now(PERU_TZ)
 
 app = Flask(__name__)
 CORS(app)
@@ -702,9 +703,9 @@ def descargar_zip_por_oc_y_rango():
             cursor.execute(f"""
                 UPDATE asistencias
                 SET zip_descargado = 1,
-                    zip_descargado_at = NOW()
+                    zip_descargado_at = %s
                 WHERE id_asistencia IN ({placeholders})
-            """, ids)
+            """, ahora_peru, ids)
 
         conn.commit()
         conn.close()
