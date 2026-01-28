@@ -14,7 +14,6 @@ from pathlib import Path
 import re
 
 PERU_TZ = timezone(timedelta(hours=-5))
-ahora_peru = datetime.now(PERU_TZ)
 
 app = Flask(__name__)
 CORS(app)
@@ -700,12 +699,14 @@ def descargar_zip_por_oc_y_rango():
         ids = [r["id_asistencia"] for r in rows if r.get("id_asistencia")]
         if ids:
             placeholders = ",".join(["%s"] * len(ids))
+            ahora_peru_str = datetime.now(PERU_TZ).strftime("%Y-%m-%d %H:%M:%S")
+
             cursor.execute(f"""
                 UPDATE asistencias
                 SET zip_descargado = 1,
                     zip_descargado_at = %s
                 WHERE id_asistencia IN ({placeholders})
-            """, ahora_peru, ids)
+            """, ahora_peru_str, ids)
 
         conn.commit()
         conn.close()
