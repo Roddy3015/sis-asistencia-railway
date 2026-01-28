@@ -706,7 +706,7 @@ def descargar_zip_por_oc_y_rango():
                 SET zip_descargado = 1,
                     zip_descargado_at = %s
                 WHERE id_asistencia IN ({placeholders})
-            """, [ahora_peru_str], ids)
+            """, [ahora_peru_str] + ids)
 
         conn.commit()
         conn.close()
