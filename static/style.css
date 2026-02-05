@@ -562,3 +562,222 @@ input[type="file"] {
     width: 100%;
   }
 }
+
+.selector-wrap{
+  width: 100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding: 0;
+  background: transparent;
+  min-height: auto;
+}
+
+.selector-card{
+  width: 100%;
+  max-width: 520px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 16px;
+  padding: 22px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+}
+
+.selector-title{
+  margin: 0 0 6px 0;
+  font-size: 22px;
+}
+
+.selector-subtitle{
+  margin: 0 0 18px 0;
+  opacity: 0.85;
+}
+
+.selector-actions{
+  display:flex;
+  flex-direction:column;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.btn-big{
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.15);
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.btn-primary{
+  background: rgba(0,255,136,0.15);
+}
+.btn-primary:hover{
+  background: rgba(0,255,136,0.22);
+}
+
+.btn-secondary{
+  background: rgba(0,123,255,0.12);
+}
+.btn-secondary:hover{
+  background: rgba(0,123,255,0.18);
+}
+
+.selector-foot{
+  margin-top: 14px;
+  opacity: 0.75;
+}
+
+/* =========================
+   FIX GLOBAL POR PÁGINA
+   ========================= */
+
+body{
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  color: white;
+  font-family: 'Poppins', sans-serif;
+  min-height: 100vh;
+  margin: 0;
+}
+
+body.page-asistencias{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;              
+  padding: 24px 16px;
+}
+
+body.page-admin{
+  display: block;
+  overflow: hidden;
+  padding: 0;
+}
+body.page-admin .admin-container{
+  height: 100vh;
+  overflow: hidden;
+}
+
+body.page-admin .tabla-scroll{
+  max-height: calc(100vh - 140px);
+  overflow-y: auto;                
+}
+
+
+body.page-asistencias .container{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 0;
+}
+
+body.page-asistencias .selector-wrap{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  min-height: auto;
+  padding: 0;
+  background: transparent;
+}
+
+body.page-asistencias .selector-card{
+  width: 100%;
+  max-width: 520px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 22px;
+  padding: 26px;
+  box-shadow: 0 25px 60px rgba(0,0,0,0.35);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+body.page-asistencias .selector-title{
+  margin: 0 0 8px 0;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: .6px;
+}
+
+body.page-asistencias .selector-subtitle{
+  margin: 0 0 18px 0;
+  opacity: 0.85;
+}
+
+body.page-asistencias .selector-actions{
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Botones del selector: mejor contraste con el gradiente */
+body.page-asistencias .btn-big{
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.16);
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: none; /* ✅ no grites en mayúsculas */
+  letter-spacing: .2px;
+}
+
+body.page-asistencias .btn-primary{
+  background: rgba(0, 255, 136, 0.16);
+  color: #fff;
+}
+body.page-asistencias .btn-primary:hover{
+  background: rgba(0, 255, 136, 0.24);
+}
+
+body.page-asistencias .btn-secondary{
+  background: rgba(0, 210, 255, 0.14);
+  color: #fff;
+}
+body.page-asistencias .btn-secondary:hover{
+  background: rgba(0, 210, 255, 0.22);
+}
+
+body.page-asistencias .selector-foot{
+  margin-top: 14px;
+  opacity: 0.78;
+}
+
+body.page-asistencias .card{
+  max-width: 420px;
+}
+
+/* Responsive */
+@media (max-width: 480px){
+  body.page-asistencias .selector-card{
+    border-radius: 18px;
+    padding: 20px;
+  }
+}
+
+#login-box button{
+  width: 220px;        
+  max-width: 90%;
+  padding: 12px 0;
+}
+
+.btn-back-menu{
+  width: auto !important;
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.92);
+  font-weight: 700;
+  cursor: pointer;
+  text-transform: none;
+  margin-bottom: 12px;
+}
+
+.btn-back-menu:hover{
+  background: rgba(255,255,255,0.14);
+}

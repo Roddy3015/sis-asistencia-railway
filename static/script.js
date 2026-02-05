@@ -2,6 +2,9 @@ let usuarioIdActual = null;
 let html5QrCode = null;
 let servicioSeleccionado = null;
 
+const BASE = document.body?.dataset?.base || "";
+const API = (path) => `${BASE}${path}`;
+
 function iniciarSesion() {
     const nombre = document.getElementById('login-nombre').value;
     const pass = document.getElementById('login-pass').value;
@@ -11,7 +14,7 @@ function iniciarSesion() {
         return;
     }
 
-    fetch('/login', {
+    fetch(API('/login'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ nombre: nombre, password: pass })
@@ -169,7 +172,7 @@ async function enviarTodo(lat, lon) {
     
     status.textContent = `Enviando reporte de ${tipoEvento}...`;
     try {
-        const res = await fetch('/registrar_grupal', {
+        const res = await fetch(API('/registrar_grupal'), {
             method: 'POST',
             body: formData
         });
@@ -199,7 +202,7 @@ document.getElementById('input-oc').addEventListener('input', async function () 
 
        if (q.length < 2) return;
 
-       const res = await fetch(`/servicios/buscar?q=${encodeURIComponent(q)}`);
+       const res = await fetch(API(`/servicios/buscar?q=${encodeURIComponent(q)}`));
        const data = await res.json();
 
        data.forEach(s => {
@@ -222,4 +225,67 @@ function confirmarServicio() {
     }
     document.getElementById('paso-0').style.display = 'none';
     document.getElementById('paso-1').style.display = 'block';
+}
+
+function mostrarLoginAsistencias() {
+  const selector = document.getElementById("app-selector");
+  const auth = document.getElementById("auth-section");
+  const panel = document.getElementById("attendance-section");
+
+  if (selector) selector.style.display = "none";
+  if (panel) panel.style.display = "none";
+  if (auth) auth.style.display = "block";
+}
+
+function irAInventario() {
+  const isLocal = location.hostname === "127.0.0.1" || location.hostname === "localhost";
+
+  if (isLocal) {
+    window.location.href = "http://127.0.0.1:5001/";
+    return;
+  }
+
+  // OPCIÓN 1 (recomendada AHORA): apunta a tu inventario YA desplegado
+  window.location.href = "https://sis-inventario-railway-production.up.railway.app/";
+
+  // OPCIÓN 2 (cuando esté bajo el mismo dominio con /inventario/):
+  // window.location.href = `${location.origin}/inventario/`;
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const selector = document.getElementById("app-selector");
+  const auth = document.getElementById("auth-section");
+  const panel = document.getElementById("attendance-section");
+
+  if (selector) selector.style.display = "flex";
+  if (auth) auth.style.display = "none";
+  if (panel) panel.style.display = "none";
+
+  document.getElementById("btn-asistencias")?.addEventListener("click", mostrarLoginAsistencias);
+  document.getElementById("btn-inventario")?.addEventListener("click", irAInventario);
+});
+
+function volverAlMenu() {
+  try { cerrarEscanner(); } catch(e) {}
+
+  servicioSeleccionado = null;
+
+  document.getElementById("paso-0").style.display = "block";
+  document.getElementById("paso-1").style.display = "none";
+  document.getElementById("paso-2").style.display = "none";
+
+  const oc = document.getElementById("input-oc");
+  if (oc) oc.value = "";
+  const sug = document.getElementById("oc-sugerencias");
+  if (sug) sug.innerHTML = "";
+  const status = document.getElementById("status-msg");
+  if (status) status.textContent = "";
+
+  const selector = document.getElementById("app-selector");
+  const auth = document.getElementById("auth-section");
+  const panel = document.getElementById("attendance-section");
+
+  if (selector) selector.style.display = "flex";
+  if (auth) auth.style.display = "none";
+  if (panel) panel.style.display = "none";
 }

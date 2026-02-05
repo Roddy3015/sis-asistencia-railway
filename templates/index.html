@@ -9,10 +9,31 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
-<body>
+<body class="page-asistencias" data-base="">
 
     <div class="container">
-        <div id="auth-section" class="card">
+        <section id="app-selector" class="selector-wrap">
+            <div class="selector-card">
+                <h1 class="selector-title">BIENVENIDO</h1>
+                <p class="selector-subtitle">Elige el módulo que deseas usar</p>
+
+                <div class="selector-actions">
+                    <button id="btn-asistencias" class="btn-big btn-primary">
+                        🗒️ Registro de Asistencias
+                    </button>
+
+                    <button id="btn-inventario" class="btn-big btn-secondary">
+                        🧰 Herramientas / Equipos
+                    </button>
+                </div>
+
+                <div class="selector-foot">
+                    <small>Si eliges asistencias, continuaras aquí mismo</small>
+                </div>
+            </div>
+        </section>
+        <div id="auth-section" class="card" style="display:none;">
+            <button id="btn-back-menu-asist" class="btn-back-menu" type="button" onclick="volverAlMenu()">← Volver al menú</button>
             <div class="profile-icon-container">
                 <div class="profile-icon">👤</div>
             </div>
